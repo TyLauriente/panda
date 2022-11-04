@@ -246,7 +246,9 @@ bool addr_safety_check(CANPacket_t *to_push,
 
 void generic_rx_checks(bool stock_ecu_detected) {
   // exit controls on rising edge of gas press
-  if (gas_pressed && !gas_pressed_prev && !(alternative_experience & ALT_EXP_DISABLE_DISENGAGE_ON_GAS)) {
+  const bool disable_disengage_on_gas = (alternative_experience & ALT_EXP_DISABLE_DISENGAGE_ON_GAS);
+
+  if (gas_pressed && !gas_pressed_prev && !disable_disengage_on_gas) {
     controls_allowed = 0;
   }
   gas_pressed_prev = gas_pressed;
@@ -575,7 +577,9 @@ bool steer_torque_cmd_checks(int desired_torque, int steer_req, const SteeringLi
 
 void pcm_cruise_check(bool cruise_engaged) {
   // Enter controls on rising edge of stock ACC, exit controls if stock ACC disengages
-  if (!cruise_engaged) {
+  const bool disable_disengage_on_gas = (alternative_experience & ALT_EXP_DISABLE_DISENGAGE_ON_GAS);
+
+  if (!cruise_engaged && !disable_disengage_on_gas) {
     controls_allowed = false;
   }
   if (cruise_engaged && !cruise_engaged_prev) {
