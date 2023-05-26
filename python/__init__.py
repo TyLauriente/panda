@@ -127,6 +127,8 @@ class ALTERNATIVE_EXPERIENCE:
   DISABLE_DISENGAGE_ON_GAS = 1
   DISABLE_STOCK_AEB = 2
   RAISE_LONGITUDINAL_LIMITS_TO_ISO_MAX = 8
+  ENABLE_MADS = 16
+  MADS_DISABLE_DISENGAGE_LATERAL_ON_BRAKE = 32
 
 class Panda:
 
@@ -230,6 +232,8 @@ class Panda:
 
   FLAG_GM_HW_CAM = 1
   FLAG_GM_HW_CAM_LONG = 2
+
+  FLAG_TOYOTA_MADS_LTA_MSG = 1
 
   def __init__(self, serial: Optional[str] = None, claim: bool = True, disable_checks: bool = True):
     self._connect_serial = serial
